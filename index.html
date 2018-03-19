@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html><head>
 <title>asn4-Shaded-sphere</title>
@@ -44,16 +45,45 @@ function facetedShpere(radius, nlongitude, nlatitude) {
 // XXX your asn4 task is to complete the code here make a facited Sphere
 // you should model you method on the smoothShere above but account for
 // the fact that you are making individual quads rather than quad_strips
-    for (j = 0; j < nlatitude; j++) {
-        for (i = 0; i <= nlongitude; i++) {
-        }
+        for (j = 0; j < nlatitude; j++) {
+        var latitude1 = (Math.PI/nlatitude) * j - Math.PI/2;
+        var latitude2 = (Math.PI/nlatitude) * (j+1) - Math.PI/2;
+        var sinLat1 = Math.sin(latitude1);
+        var cosLat1 = Math.cos(latitude1);
+        var sinLat2 = Math.sin(latitude2);
+        var cosLat2 = Math.cos(latitude2);
+            for (i = 0; i <= nlongitude; i++) {
+            var longitude = (2*Math.PI/nlongitude) * i;
+            var longitude2 = (2*Math.PI/nlongitude) * (i+1);
+            var sinLong = Math.sin(longitude);
+            var cosLong = Math.cos(longitude);
+            var sinLong2 = Math.sin(longitude2);
+            var cosLong2 = Math.cos(longitude2);
+            var x1 = cosLong * cosLat1;
+            var y1 = sinLong * cosLat1;
+            var z1 = sinLat1;
+            var x2 = cosLong * cosLat2;
+            var y2 = sinLong * cosLat2;
+            var z2 = sinLat2;
+            var x3 = cosLong2 * cosLat1;
+            var y3 = sinLong2 * cosLat1;
+            var z3 = sinLat1;
+            var x4 = cosLong2 * cosLat2;
+            var y4 = sinLong2 * cosLat2;
+            var z4 = sinLat2;
+            glNormal3d( (x1+x2+x3+x4/4), (y1+y2+y3+y4/4), (z1+z2+z3+z4/4) );
+            glVertex3d(radius*x1,radius*y1,radius*z1);
+            glVertex3d(radius*x2,radius*y2,radius*z2);
+            glVertex3d(radius*x4,radius*y4,radius*z4);
+            glVertex3d(radius*x3,radius*y3,radius*z3);
+            }
     }
 // These lines are only here to show how to draw a single quad
-glNormal3d(1,-1,1);	// the normal vector orientation determines brightness
+/*glNormal3d(1,-1,1);	// the normal vector orientation determines brightness
 glVertex3d(5,5,0);
 glVertex3d(5,-5,0);
 glVertex3d(-5,-5,.5);	// .5 z to get a slight tilt for the initial view
-glVertex3d(-5,5,.5);
+glVertex3d(-5,5,.5);*/
     glEnd();
 }
 
@@ -68,7 +98,7 @@ function draw() {
     if (faceted) {
         facetedShpere(4,nlongitude,nlatitude);
     } else {
-        smoothShpere(4,nlongitude,nlatitude);
+       smoothShpere(4,nlongitude,nlatitude);
     }
 }
 
@@ -79,7 +109,7 @@ function initGL() {
     glEnable(GL_DEPTH_TEST);
     glClearColor(0,0,0,1);
     glColor3f(0,0,0);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, [0.7, 0.7, 0.7, 1]);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, [0.7, 0.7, 0.7, 1]);    //lighting
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, [0.2, 0.2, 0.2, 1]);
     glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, 16);
     glLightfv(GL_LIGHT0, GL_SPECULAR, [1,1,1,1]);
