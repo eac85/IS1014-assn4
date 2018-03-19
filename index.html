@@ -53,27 +53,32 @@ function facetedShpere(radius, nlongitude, nlatitude) {
         var sinLat2 = Math.sin(latitude2);
         var cosLat2 = Math.cos(latitude2);
             for (i = 0; i <= nlongitude; i++) {
-            var longitude = (2*Math.PI/nlongitude) * i;
-            var longitude2 = (2*Math.PI/nlongitude) * (i+1);
-            var sinLong = Math.sin(longitude);
-            var cosLong = Math.cos(longitude);
-            var sinLong2 = Math.sin(longitude2);
-            var cosLong2 = Math.cos(longitude2);
+            var long = (2*Math.PI/nlongitude) * i;
+            var long2 = (2*Math.PI/nlongitude) * (i+1);
+            var sinLong = Math.sin(long);
+            var cosLong = Math.cos(long);
+            var sinLong2 = Math.sin(long2);
+            var cosLong2 = Math.cos(long2);
             var x1 = cosLong * cosLat1;
-            var y1 = sinLong * cosLat1;
-            var z1 = sinLat1;
             var x2 = cosLong * cosLat2;
-            var y2 = sinLong * cosLat2;
-            var z2 = sinLat2;
             var x3 = cosLong2 * cosLat1;
-            var y3 = sinLong2 * cosLat1;
-            var z3 = sinLat1;
             var x4 = cosLong2 * cosLat2;
+
+            var y1 = sinLong * cosLat1;
+            var y2 = sinLong * cosLat2;
+            var y3 = sinLong2 * cosLat1;
             var y4 = sinLong2 * cosLat2;
+
+            var z1 = sinLat1;
+            var z2 = sinLat2;
+            var z3 = sinLat1;
             var z4 = sinLat2;
-            glNormal3d( (x1+x2+x3+x4/4), (y1+y2+y3+y4/4), (z1+z2+z3+z4/4) );
+
+           /* glNormal3d( (x1+x2+x3+x4/4), (y1+y2+y3+y4/4), (z1+z2+z3+z4/4) );*/
+            glNormal3d(x1, y1, z1);
             glVertex3d(radius*x1,radius*y1,radius*z1);
             glVertex3d(radius*x2,radius*y2,radius*z2);
+            glNormal3d(x2, y2, z2);
             glVertex3d(radius*x4,radius*y4,radius*z4);
             glVertex3d(radius*x3,radius*y3,radius*z3);
             }
